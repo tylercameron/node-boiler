@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    p Yo!
+    
+    //- indentation must be consistent
+    .wrapper 
+        - const upperDog = name.toUpperCase(); //- how you write variables in pug
+        p#hello Hello!
+        p #{dog}
+        p.alt-p somethings the passed text is #{upperDog}
+        img(src='dog.jpg' alt=`dog ${name}`)
+
