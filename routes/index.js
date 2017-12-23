@@ -1,35 +1,43 @@
 const express = require('express');
 const router = express.Router();
-// const storeController = require('../controllers/storeController');
+const storeController = require('../controllers/storeController');
 // const userController = require('../controllers/userController');
 // const authController = require('../controllers/authController');
 // const reviewController = require('../controllers/reviewController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
+router.get('/', storeController.homePage);
+router.get('/add', storeController.addStore);
 
-router.get('/', (req, res) => {
-  const turtle = {
-    name: "T",
-    age: 30,
-    location: "Aus"
-  }
-  // res.send('Hey! It works!');
-  // res.json(turtle);
-  // res.json(req.query.name); //this grabs info from url query and displays
-  res.render('hello', {
-    name: 'test',
-    dog: req.query.dog,
-    title: 'example-title'
-  }); // redner allows us to render a template - in our views
-});
+router.post('/add', 
+    storeController.upload,
+    catchErrors(storeController.resize),
+    catchErrors(storeController.createStore)
+);
 
-router.get('/reverse/:name', (req, res) => {
-  // res.send('it works!');
-  const reverse = [...req.params.name].reverse().join("");
-  // res.send(req.params.name) // params takes name from url (: in front means it can change)
-  res.send(reverse);
-})
+// router.get('/', (req, res) => {
+//   const turtle = {
+//     name: "T",
+//     age: 30,
+//     location: "Aus"
+//   }
+//   // res.send('Hey! It works!');
+//   // res.json(turtle);
+//   // res.json(req.query.name); //this grabs info from url query and displays
+//   res.render('hello', {
+//     name: 'test',
+//     dog: req.query.dog,
+//     title: 'example-title'
+//   }); // redner allows us to render a template - in our views
+// });
+
+// router.get('/reverse/:name', (req, res) => {
+//   // res.send('it works!');
+//   const reverse = [...req.params.name].reverse().join("");
+//   // res.send(req.params.name) // params takes name from url (: in front means it can change)
+//   res.send(reverse);
+// })
 
 
 
