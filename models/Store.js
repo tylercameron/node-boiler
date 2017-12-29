@@ -25,8 +25,7 @@ const storeSchema = new mongoose.Schema({
         },
         coordinates: [
             {
-                type: Number,
-                required: "You must supply coordinates."
+                type: Number
             }
         ],
         address: {
@@ -73,6 +72,58 @@ storeSchema.pre("save", async function(next) {
     const storesWithSlug = await this.constructor.find({ slug: slugRegExp });
     if (storesWithSlug.length) {
         this.slug = `${this.slug}-${storesWithSlug.length + 1}`;
+    }
+
+    // if (this.isModified("location")) {
+    //     console.log('location modified');
+
+    //     let geocoder = new google.maps.Geocoder();
+
+    //     geocoder.geocode( { 'address': address}, function(results, status) {
+    //         if (status == 'OK') {
+    //             console.log(results[0].geometry.location);
+    //             // var marker = new google.maps.Marker({
+    //             //     map: map,
+    //             //     position: results[0].geometry.location
+    //             // });
+    //         } else {
+    //             alert('Geocode was not successful for the following reason: ' + status);
+    //         }
+    //     });
+    //     console.log(this.location.address.geometry.location);
+    //     // this.location.coordinates = 
+    //     //     const place = dropdown.getPlace();
+    // //     latInput.value = place.geometry.location.lat();
+    // //     lngInput.value = place.geometry.location.lng();
+    // }
+    next();
+});
+
+storeSchema.pre('save', function (next) {
+    if (this.isModified("location")) {
+        console.log('location modified');
+
+        // let geocoder = new google.maps.Geocoder();
+        const dropdown = new google.maps.places.Autocomplete(this.location.address);
+
+        // geocoder.geocode( { 'address': address}, function(results, status) {
+        //     if (status == 'OK') {
+        //         console.log(results[0].geometry.location);
+        //         // var marker = new google.maps.Marker({
+        //         //     map: map,
+        //         //     position: results[0].geometry.location
+        //         // });
+        //     } else {
+        //         alert('Geocode was not successful for the following reason: ' + status);
+        //     }
+        // });
+        const place = dropdown.getPlace();
+        console.log(place.geometry.location.lat());
+        console.log(this.location.address.geometry.location);
+        // this.location.coordinates = 
+        //     const place = dropdown.getPlace();
+    //     latInput.value = place.geometry.location.lat();
+    //     lngInput.value = place.geometry.location.lng();
     }
     next();
 });
