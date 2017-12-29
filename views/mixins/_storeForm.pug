@@ -1,7 +1,7 @@
 mixin storeForm(store = {})
     form(action="/add" method="POST" class="card" enctype="multipart/form-data")
         label(for="name") Name
-        input(type="text" name="name" id="name")
+        input(type="text" name="name" id="name" required)
         label(for="photo") Feature Image
             input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
         label(for="url") Website URL (eg. "google.com")
@@ -9,10 +9,10 @@ mixin storeForm(store = {})
         label(for="phone") Phone Number
         input(type="text" id="phone" name="phone")
         label(for="address") Address
-        input(type="text" id="address" name="location[address]" value=(store.location && store.location.address))
-        label(for="lng") Address Lng
+        input(type="text" id="address" name="location[address]" value=(store.location && store.location.address) required)
+        //- label(for="lng") Address Lng
         input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
-        label(for="lat") Address Lat
+        //- label(for="lat") Address Lat
         input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
         input(type="submit" value="Save →" class="button")
         //- - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Vegatarian', 'Licensed']
