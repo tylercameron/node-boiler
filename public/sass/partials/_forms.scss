@@ -30,3 +30,12 @@ label {
     border-bottom: 1px solid $grey;
   }
 }
+
+#lng,
+#lat {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+  padding: 0;
+}
