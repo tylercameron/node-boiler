@@ -15,8 +15,13 @@ router.post('/add',
     catchErrors(storeController.resize),
     catchErrors(storeController.createStore)
 );
-
+router.post('/add/:id',
+    storeController.upload,
+    catchErrors(storeController.resize),
+    catchErrors(storeController.updateStore)
+);
 router.get('/stores', catchErrors(storeController.getStores));
+router.get('/stores/:id/edit', catchErrors(storeController.editStore));
 
 // router.get('/', (req, res) => {
 //   const turtle = {
