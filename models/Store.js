@@ -141,3 +141,16 @@ storeSchema.pre("save", async function(next) {
 // storeSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("Store", storeSchema);
+
+
+// Name
+// Slug?
+// Image
+// Address
+// Coordinates (map)
+// Phone #
+// Website Link
+// Owner (User) (Through Restaurant)
+// Deals
+// Vendor Status (boolean)
+// Reviews (Google API)
