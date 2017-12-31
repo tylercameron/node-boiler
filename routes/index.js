@@ -7,7 +7,7 @@ const storeController = require('../controllers/storeController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/', storeController.homePage);
+router.get('/', storeController.getStores);
 router.get('/add', storeController.addStore);
 
 router.post('/add', 
@@ -15,6 +15,8 @@ router.post('/add',
     catchErrors(storeController.resize),
     catchErrors(storeController.createStore)
 );
+
+router.get('/stores', catchErrors(storeController.getStores));
 
 // router.get('/', (req, res) => {
 //   const turtle = {

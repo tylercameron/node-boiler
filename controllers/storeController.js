@@ -16,9 +16,11 @@ const multerOptions = {
     }
 };
 
-exports.homePage = (req, res) => {
-    console.log(req.name);
-    res.render('index');
+exports.getStores = async (req, res) => {
+    // console.log(req.name);
+    // res.render('index');
+    const stores = await Store.find();
+    res.render('stores', { title: 'Stores', stores });
 };
 
 exports.addStore = (req, res) => {
