@@ -25,21 +25,44 @@ router.get('/stores/:id/edit', catchErrors(storeController.editStore));
 
 router.get('/store/:slug', catchErrors(storeController.getStoreBySlug));
 
-router.get('/login', userController.loginForm);
-router.get('/register', userController.registerForm);
+// router.get('/login', userController.loginForm);
+// router.get('/register', userController.registerForm);
 
-// 1. Validate the registration data
-// 2. register the user
-// 3. we need to log them in
-router.post('/register',
-    userController.validateRegister,
-    // we need to know about errors if 
-    // validation will be passed, but registration 
-    // will be failed in some reasons, e.g. second 
-    // registration with same email
-    catchErrors(userController.register),
-    authController.login
-);
+// // 1. Validate the registration data
+// // 2. register the user
+// // 3. we need to log them in
+// router.post('/register',
+//     userController.validateRegister,
+//     // we need to know about errors if 
+//     // validation will be passed, but registration 
+//     // will be failed in some reasons, e.g. second 
+//     // registration with same email
+//     catchErrors(userController.register),
+//     authController.login
+// );
+
+router.get('/login', userController.loginForm);
+router.get('/auth/google', authController.login);
+router.get('/auth/google/callback', authController.googleAuth);
+// router.post('/login', authController.login);
+
+// app.get('/auth/google', passport.authenticate('google', {
+//     scope: ['profile', 'email']
+// }));
+
+// app.get('/auth/google/callback', passport.authenticate('google'));
+
+// app.get('/api/logout', (req, res) => {
+//     req.logout();
+//     res.send('you have been logged out!');
+// });
+
+// app.get('/api/current_user', (req, res) => {
+//     res.send(req.user);
+// });
+
+
+
 
 // router.get('/', (req, res) => {
 //   const turtle = {
