@@ -8,7 +8,12 @@ exports.login = passport.authenticate('google', {
 //     successFlash: 'You are now logged in!'
 });
 
-exports.googleAuth = passport.authenticate('google');
+exports.googleAuth = passport.authenticate('google', { 
+    failureRedirect: '/login',
+    failureFlash: 'Failed Login!',
+    successRedirect: '/',
+    successFlash: 'You are now logged in!'
+});
 
 // app.get('/auth/google', passport.authenticate('google', {
 //     scope: ['profile', 'email']
