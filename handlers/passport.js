@@ -1,17 +1,7 @@
-// const passport = require('passport');
-// const mongoose = require('mongoose');
-// const User = mongoose.model('User');
-
-// passport.use(User.createStrategy());
-
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-// const keys = require('../config/keys');
 
 const User = mongoose.model('User');
 
@@ -38,25 +28,15 @@ passport.use(
             const user = await User.findOne({ googleId: profile.id }).exec();
 
             if (!user) {
-                const newUser = await new User({ googleId: profile.id }).save();
-                console.log('user', newUser);
+                const newUser = await new User({ 
+                    googleId: profile.id,
+                    email: profile.emails[0].value,
+                    name: profile.displayName
+                }).save();
                 done(null, newUser);
             };
 
             done(null, user);
-
-            // User.findOne({ googleId: profile.id }) // same as async await above
-            //     .then(existingUser => {
-            //         if (existingUser) {
-            //             // don't save to db
-            //             done(null, existingUser); 
-            //         } else {
-            //             // save user to db
-            //             new User({ googleId: profile.id })
-            //                 .save()
-            //                 .then(user => done(null, user));
-            //         }
-            //     });
         }
     )
 );
