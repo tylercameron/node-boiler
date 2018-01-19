@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    .inner
+        h2 Your Account
+        dl
+            dt Name
+            dd #{user.name}
+            dt Email
+            dd= user.email
