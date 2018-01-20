@@ -1,0 +1,8 @@
+mixin dealCard(deal = {})
+    .store
+        .store__hero
+            h2.title
+                a(href=`/deals/${deal.slug}`) #{deal.description}
+        .store__details            
+            h3 $#{deal.price}
+            h4= deal.day
