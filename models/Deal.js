@@ -50,11 +50,10 @@ const dealSchema = new mongoose.Schema({
 });
 
 dealSchema.pre("save", async function (next) {
-    // if (!this.isModified("name")) {
-    //     next(); //skip it
-    //     return; // stop function from running
-    // }
-    
+    if (!this.isModified("storeName") && !this.isModified("description")) {
+        next(); //skip it
+        return; // stop function from running
+    }
     this.slug = slug((this.storeName).concat(" ", this.description));
 
     const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
