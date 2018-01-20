@@ -3,7 +3,7 @@ const router = express.Router();
 const storeController = require('../controllers/storeController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
-// const reviewController = require('../controllers/reviewController');
+const dealController = require('../controllers/dealController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
@@ -30,5 +30,11 @@ router.get('/auth/google', authController.login);
 router.get('/auth/google/callback', authController.googleAuth);
 router.get('/logout', authController.logout);
 router.get('/account', authController.isLoggedIn, userController.account);
+
+router.get('/deals', catchErrors(dealController.getAllDeals));
+router.post('/deals/:id',
+    authController.isLoggedIn,
+    catchErrors(dealController.addDeal)
+);
 
 module.exports = router;
