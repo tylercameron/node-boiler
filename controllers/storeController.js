@@ -18,7 +18,6 @@ const multerOptions = {
 
 exports.getStores = async (req, res) => {
     // console.log(req.name);
-    // res.render('index');
     const stores = await Store.find();
     res.render('stores', { title: 'Stores', stores });
 };
@@ -32,8 +31,8 @@ exports.upload = multer(multerOptions).single("photo");
 exports.resize = async (req, res, next) => {
     // check if there is no new file to resize
     if (!req.file) {
-        next(); // skip to the next middleware
         console.log('no file to resize');
+        next(); // skip to the next middleware
         return;
     }
     const extension = req.file.mimetype.split("/")[1];
