@@ -1,5 +1,8 @@
 extends layout
 
+include mixins/_dealForm
+include mixins/_deal
+
 block content
     .single
         .single__hero
@@ -12,6 +15,15 @@ block content
         p.single__location= store.location.address
             p.phone
                 a(href=`tel:${store.phone}`) #{store.phone}
+
+            if user
+                +dealForm(store)
+
+            //- if store.reviews
+            //-     .reviews
+            //-         each review in store.reviews
+            //-             .review
+            //-                 +deal(deal)
 
         //- if store.tags
         //-     ul.tags
