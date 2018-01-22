@@ -77,12 +77,12 @@ dealSchema.pre("save", async function (next) {
 //     ]);
 // };
 
-// function autopopulate(next) {
-//     this.populate('author');
-//     next();
-// };
+function autopopulate(next) {
+    this.populate('store');
+    next();
+};
 
-// dealSchema.pre('find', autopopulate);
+dealSchema.pre('find', autopopulate);
 // dealSchema.pre('findOne', autopopulate);
 
 module.exports = mongoose.model('Deal', dealSchema);
