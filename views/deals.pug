@@ -5,6 +5,9 @@ include mixins/_dealCard
 block content
     .inner
         h2= title
+        //- #{h.dump(deals)}
+        #{h.dump(deals)}
             .stores
                 each deal in deals
                     +dealCard(deal)
+                    //- h2= store.name

@@ -15,7 +15,8 @@ exports.addDeal = async (req, res) => {
 
 exports.getAllDeals = async (req, res) => {
     const deals = await Deal.find();
-    res.render(deals);
+    // res.render(deals);
+    res.render('deals', { title: 'Deals', deals });
 }
  
     // exports.getStores = async (req, res) => {
