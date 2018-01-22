@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .inner
+        h2= title
+            ul.tags
+                each category in categories
+                    //- li.tag #{category.category}
+                    li.tag
+                        a.tag__link(href=``)
+                            span.tag__text= category.category
+
+            //- ul.tags
+            //-     each t in tags
+            //-         li.tag
+            //-             a.tag__link(href=``)
+            //-                 span.tag__text= t._id
+            //-                 //- span.tag__count= t.count
