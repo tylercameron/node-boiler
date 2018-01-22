@@ -4,6 +4,7 @@ const storeController = require('../controllers/storeController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const dealController = require('../controllers/dealController');
+const categoryController = require('../controllers/categoryController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
@@ -36,5 +37,9 @@ router.post('/deals/:id',
     authController.isLoggedIn,
     catchErrors(dealController.addDeal)
 );
+
+router.get('/categories', catchErrors(categoryController.getCategories));
+router.get('/categories/add', authController.isLoggedIn, categoryController.addCategories);
+router.post('/categories/add', authController.isLoggedIn, catchErrors(categoryController.createCategories));
 
 module.exports = router;
