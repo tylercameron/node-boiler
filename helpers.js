@@ -22,8 +22,9 @@ exports.siteName = `Pub Up!`;
 
 exports.menu = [
   { slug: '/stores', title: 'Stores', icon: 'store', },
-  { slug: '/tags', title: 'Tags', icon: 'tag', },
+  // { slug: '/tags', title: 'Tags', icon: 'tag', },
   { slug: '/deals', title: 'Deals', icon: 'top', },
   { slug: '/add', title: 'Add', icon: 'add', },
   { slug: '/map', title: 'Map', icon: 'map', },
+  { slug: '/categories', title: 'Categories', icon: 'tag', }
 ];
