@@ -84,7 +84,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import makeMap from './modules/map';
 // import ajaxHeart from './modules/heart';
 
-(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
+(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'), (0, _bling.$)('#store-name'));
 
 // typeAhead( $('.search') );
 
@@ -139,14 +139,16 @@ exports.$$ = $$;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-function autocomplete(input, latInput, lngInput) {
+function autocomplete(input, latInput, lngInput, storeName) {
     if (!input) return; // skip this fn from running if there is not input on the page
     var dropdown = new google.maps.places.Autocomplete(input);
 
     dropdown.addListener("place_changed", function () {
         var place = dropdown.getPlace();
+        console.log(place);
         latInput.value = place.geometry.location.lat();
         lngInput.value = place.geometry.location.lng();
+        storeName.value = place.name;
     });
     // if someone hits enter on the address field, don't submit the form
     input.on("keydown", function (e) {
