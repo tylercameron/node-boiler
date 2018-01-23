@@ -8,10 +8,11 @@ const categoryController = require('../controllers/categoryController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/', storeController.getStores);
+// router.get('/', storeController.getStores);
+router.get('/', dealController.getAllDeals);
 
-router.get('/add', authController.isLoggedIn, storeController.addStore);
-router.post('/add', 
+router.get('/add-store', authController.isLoggedIn, storeController.addStore);
+router.post('/add-store', 
     storeController.upload,
     catchErrors(storeController.resize),
     catchErrors(storeController.createStore)
@@ -33,10 +34,11 @@ router.get('/logout', authController.logout);
 router.get('/account', authController.isLoggedIn, userController.account);
 
 router.get('/deals', catchErrors(dealController.getAllDeals));
-router.post('/deals/:id',
-    authController.isLoggedIn,
-    catchErrors(dealController.addDeal)
+router.get('/add-deal', 
+    authController.isLoggedIn, 
+    dealController.addDeal
 );
+router.post('/deals/add', catchErrors(dealController.createDeal));
 
 router.get('/categories', catchErrors(categoryController.getCategories));
 router.get('/categories/add', authController.isLoggedIn, categoryController.addCategories);
