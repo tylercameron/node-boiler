@@ -1,5 +1,20 @@
-mixin dealForm(store)
-    form(action=`/deals/${store._id}`, method="post")
+mixin dealForm(deal = {})
+    form(action=`/add-deal`, method="post")
+        label(for="name") Name
+        input(type="text" name="name" id="store-name" required)
+        //- label(for="photo") Feature Image
+        //-     input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+        //-     if store.photo
+        //-         img(src=`/uploads/${store.photo}`, alt=store.name width=200)
+        label(for="url") Website URL (eg. "google.com")
+        input(type="text" id="url" name="url")
+        label(for="phone") Phone Number
+        input(type="text" id="phone" name="phone")
+        label(for="address") Address
+        input(type="text" id="address" name="location[address]" required)
+        input(type="text" id="lng" name="location[coordinates][0]")
+        input(type="text" id="lat" name="location[coordinates][1]")
+        
         label(for="day") Day of the Week
         select(name="day")
             option(value="monday" selected) Monday
@@ -37,3 +52,26 @@ mixin dealForm(store)
     //-     input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
     //-     input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
     //-     input(type="submit" value="Save →" class="button")
+//- mixin storeForm(store = {})
+//-     form(action=`/add-store/${store._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+//-         label(for="name") Name
+//-         input(type="text" name="name" id="store-name" value=store.name required)
+//-         label(for="photo") Feature Image
+//-             input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+//-             if store.photo
+//-                 img(src=`/uploads/${store.photo}`, alt=store.name width=200)
+//-         label(for="url") Website URL (eg. "google.com")
+//-         input(type="text" id="url" name="url" value=store.url)
+//-         label(for="phone") Phone Number
+//-         input(type="text" id="phone" name="phone" value=store.phone)
+//-         label(for="address") Address
+//-         input(type="text" id="address" name="location[address]" value=(store.location && store.location.address) required)
+//-         input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
+//-         input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
+//-         input(type="submit" value="Save →" class="button")
+//-         //- - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Vegatarian', 'Licensed']
+//-         //- ul.tags
+//-         //-     each choice in choices
+//-         //-         .tag.tag__choice
+//-         //-             input(type="checkbox" id=choice value=choice name="tags")
+//-         //-             label(for=choice) #{choice}
