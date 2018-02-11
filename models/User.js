@@ -23,7 +23,8 @@ const userSchema = new Schema({
         type: String,
         required: 'Please supply a name',
         trim: true
-    }
+    },
+    vendor: Boolean
 });
 
 userSchema.virtual('gravatar').get(function () {
