@@ -17,7 +17,11 @@ const dealSchema = new mongoose.Schema({
         ref: 'Store',
         required: 'You must supply a store'
     },
-    storeName: String,
+    category: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category',
+        required: 'You must supply a category'
+    },
     day: {
         type: String,
         required: 'Your deal must have a day',
@@ -50,11 +54,12 @@ const dealSchema = new mongoose.Schema({
 });
 
 dealSchema.pre("save", async function (next) {
-    if (!this.isModified("storeName") && !this.isModified("description")) {
+    if (!this.isModified("store") && !this.isModified("description")) {
         next(); //skip it
         return; // stop function from running
     }
-    this.slug = slug((this.storeName).concat(" ", this.description));
+    const storeName = this.populate('store', 'name');
+    this.slug = slug((storeName).concat(" ", this.description));
 
     const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
     const dealsWithSlug = await this.constructor.find({ slug: slugRegExp });
