@@ -53,21 +53,22 @@ const dealSchema = new mongoose.Schema({
 //     toObject: { virtuals: true }
 });
 
-dealSchema.pre("save", async function (next) {
-    if (!this.isModified("store") && !this.isModified("description")) {
-        next(); //skip it
-        return; // stop function from running
-    }
-    const storeName = this.populate('store', 'name');
-    this.slug = slug((storeName).concat(" ", this.description));
+// dealSchema.pre("save", async function (next) {
+//     if (!this.isModified("store") && !this.isModified("description")) {
+//         next(); //skip it
+//         return; // stop function from running
+//     }
+//     const storeName = this.populate("store");
+//     console.log('storename', storeName);
+//     // this.slug = slug((storeName).concat(" ", this.description));
 
-    const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
-    const dealsWithSlug = await this.constructor.find({ slug: slugRegExp });
-    if (dealsWithSlug.length) {
-        this.slug = `${this.slug}-${dealsWithSlug.length + 1}`;
-    }
-    next();
-}); 
+//     // const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
+//     // const dealsWithSlug = await this.constructor.find({ slug: slugRegExp });
+//     // if (dealsWithSlug.length) {
+//     //     this.slug = `${this.slug}-${dealsWithSlug.length + 1}`;
+//     // }
+//     next();
+// }); 
 
 // dealSchema.statics.getStoreName = function () {
 //     return this.aggregate([
