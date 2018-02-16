@@ -13,19 +13,33 @@ const categorySchema = new mongoose.Schema({
     photo: String
 });
 
+// Define our indexes
+categorySchema.index({
+    category: "text"
+});
+
 categorySchema.pre("save", async function (next) {
     if (!this.isModified("category")) {
         next(); //skip it
         return; // stop function from running
     }
     this.slug = slug(this.category);
-
-    // const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i");
-    // const categoryWithSlug = await this.constructor.find({ slug: slugRegExp });
-    // if (categoryWithSlug.length) {
-    //     this.slug = `${this.slug}-${categoryWithSlug.length + 1}`;
-    // }
     next();
 }); 
+
+categorySchema.statics.getCategoriesList = function () {
+    // this.populate('category');
+    return this.aggregate([
+        { $group: { _id: '$_id', category: { $first: '$category' } } }
+        // {
+        //     $lookup: {
+        //         from: 'categories', //this corresponds to 'Review' db. mongoose makes it lowercase and add an 's' on the end
+        //         localField: 'category',
+        //         foreignField: '_id',
+        //         as: 'categories'
+        //     }
+        // }
+    ]);
+};
 
 module.exports = mongoose.model('Category', categorySchema);
