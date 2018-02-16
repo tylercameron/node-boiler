@@ -30,7 +30,7 @@ categorySchema.pre("save", async function (next) {
 categorySchema.statics.getCategoriesList = function () {
     // this.populate('category');
     return this.aggregate([
-        { $group: { _id: '$_id', category: { $first: '$category' } } }
+        { $group: { _id: '$_id', category: { $first: '$category' }, slug: { $first: '$slug' } } }
         // {
         //     $lookup: {
         //         from: 'categories', //this corresponds to 'Review' db. mongoose makes it lowercase and add an 's' on the end
