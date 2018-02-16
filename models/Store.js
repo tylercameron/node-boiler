@@ -45,16 +45,16 @@ const storeSchema = new mongoose.Schema({
         ref: 'User',
         required: 'You must supply an author.'
     }
-}, {
-    //below is necessary because when adding object through virtuals it will not appear in teh JSON unless explicitely called. eg calling 'store' will not show reviews data, but calling 'store.reviews' will. adding this fixes this
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
+// }, {
+//     //below is necessary because when adding object through virtuals it will not appear in teh JSON unless explicitely called. eg calling 'store' will not show reviews data, but calling 'store.reviews' will. adding this fixes this
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true }
 });
 
 // Define our indexes
 // storeSchema.index({
 //     name: "text",
-//     description: "text"
+//     address: "text"
 // });
 
 // storeSchema.index({ location: "2dsphere" });
@@ -74,20 +74,20 @@ storeSchema.pre("save", async function(next) {
     next();
 }); 
 
-// // find reviews where the stores _id property === reviews store property
-storeSchema.virtual("deals", {
-    ref: "Deal", // what model to link
-    localField: "_id", //which field on the store
-    foreignField: "store" //which field on the reivew
-});
+// // find deals where the stores _id property === deals store property
+// storeSchema.virtual("deals", {
+//     ref: "Deal", // what model to link
+//     localField: "_id", //which field on the store
+//     foreignField: "store" //which field on the reivew
+// });
 
-function autopopulate(next) {
-  this.populate("deals");
-  return next();
-}
+// function autopopulate(next) {
+//   this.populate("deals");
+//   return next();
+// }
 
 // storeSchema.pre("find", autopopulate);
-storeSchema.pre("findOne", autopopulate);
+// storeSchema.pre("findOne", autopopulate);
 
 module.exports = mongoose.model("Store", storeSchema);
 
