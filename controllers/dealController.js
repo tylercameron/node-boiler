@@ -74,7 +74,7 @@ exports.createDeal = async (req, res) => {
 exports.getDealsByCategory = async (req, res) => {
     let category = req.params.category;
     if (category) {
-        const currentCategory = await Category.findOne({ category: category });
+        const currentCategory = await Category.findOne({ slug: category });
         category = currentCategory._id
     }
     const categoryQuery = category || { $exists: true };
