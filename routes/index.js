@@ -38,9 +38,12 @@ router.get('/add-deal',
     authController.isLoggedIn, 
     dealController.addDeal
 );
-router.post('/deals/add', catchErrors(dealController.createDeal));
+// router.post('/deals/add', catchErrors(dealController.createDeal));
+router.post('/add-deal', dealController.createDeal);
 
-router.get('/categories', catchErrors(categoryController.getCategories));
+// router.get('/categories', catchErrors(categoryController.getCategories));
+router.get('/categories', catchErrors(dealController.getDealsByCategory));
+router.get('/categories/:category', catchErrors(dealController.getDealsByCategory));
 router.get('/categories/add', authController.isLoggedIn, categoryController.addCategories);
 router.post('/categories/add', authController.isLoggedIn, catchErrors(categoryController.createCategories));
 
