@@ -56,6 +56,7 @@ exports.createDeal = async (req, res) => {
         } else {
             req.body.verified = false;
         }
+        req.body.store = store._id;
     } else {
         // TODO: add default image for store created this way
         const newStore = await (new Store(req.body)).save();
@@ -63,9 +64,24 @@ exports.createDeal = async (req, res) => {
     }
     const slugs = await makeSlug(req.body.name, req.body.description);
     req.body.slug = slugs;
-    req.body.store = store._id;
  
     const newDeal = await (new Deal(req.body)).save();
+    console.log(newDeal);
     req.flash('success', 'Deal Saved!');
     res.redirect('/deals');
+};
+
+exports.getDealsByCategory = async (req, res) => {
+    let category = req.params.category;
+    if (category) {
+        const currentCategory = await Category.findOne({ category: category });
+        category = currentCategory._id
+    }
+    const categoryQuery = category || { $exists: true };
+
+    const categoryPromise = Category.getCategoriesList();
+    const dealsPromise = Deal.find({ category: categoryQuery });
+    const [categories, deals] = await Promise.all([categoryPromise, dealsPromise]);
+    console.log(categories);
+    res.render('categories', { categories, title: 'Categories', category, deals });
 };
