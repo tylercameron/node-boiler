@@ -66,7 +66,7 @@ exports.createDeal = async (req, res) => {
     req.body.slug = slugs;
  
     const newDeal = await (new Deal(req.body)).save();
-    console.log(newDeal);
+    
     req.flash('success', 'Deal Saved!');
     res.redirect('/deals');
 };
@@ -82,6 +82,6 @@ exports.getDealsByCategory = async (req, res) => {
     const categoryPromise = Category.getCategoriesList();
     const dealsPromise = Deal.find({ category: categoryQuery });
     const [categories, deals] = await Promise.all([categoryPromise, dealsPromise]);
-    console.log(categories);
+    
     res.render('categories', { categories, title: 'Categories', category, deals });
 };
