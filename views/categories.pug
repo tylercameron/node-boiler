@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/_dealCard
+
 block content
     #{h.dump(deals)}
     .inner
@@ -9,6 +11,9 @@ block content
                 li.tag
                     a.tag__link(href=`/categories/${category.slug}`)
                         span.tag__text= category.category
+        .stores
+            each deal in deals
+                +dealCard(deal)  
 
 //- extends layout
 
