@@ -18,13 +18,13 @@ mixin dealForm(deal = {}, categories = {})
         
         label(for="day") Day of the Week
         select(name="day")
-            option(value="monday" selected) Monday
-            option(value="tuesday") Tuesday
-            option(value="wednesday") Wednesday
-            option(value="thursday") Thursday
-            option(value="friday") Friday
-            option(value="saturday") Saturday
-            option(value="sunday") Sunday
+            option(value="1-Monday" selected) Monday
+            option(value="2-Tuesday") Tuesday
+            option(value="3-Wednesday") Wednesday
+            option(value="4-Thursday") Thursday
+            option(value="5-Friday") Friday
+            option(value="6-Saturday") Saturday
+            option(value="7-Sunday") Sunday
         label(for="price") Price
         input(type="number", name="price" min="0" step="0.01" placeholder="eg. 5.99")
         //- <input type="number" value="1000" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="currency" id="c1" />
