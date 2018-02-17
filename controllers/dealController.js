@@ -17,9 +17,11 @@ async function makeSlug(store, description) {
 };
 
 exports.getAllDeals = async (req, res) => {
-    const deals = await Deal.find();
+    const dealsPromise = Deal.find();
+    const dayPromise = Deal.getDays();
+    const [ deals, days ] = await Promise.all([dealsPromise, dayPromise]);
     // res.render(deals);
-    res.render('deals', { title: 'Deals', deals });
+    res.render('deals', { title: 'Deals', deals, days });
 };
 
 exports.addDeal = async (req, res) => {

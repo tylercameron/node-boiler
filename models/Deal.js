@@ -83,21 +83,12 @@ const dealSchema = new mongoose.Schema({
 //     ]);
 // };
 
-// dealSchema.statics.getCategoriesList = function () {
-//     // this.populate('category');
-//     return this.aggregate([
-//         { $group: { _id: '$category', count: { $sum: 1 } } },
-//         { $sort: { count: -1 } }
-//         // {
-//         //     $lookup: {
-//         //         from: 'categories', //this corresponds to 'Review' db. mongoose makes it lowercase and add an 's' on the end
-//         //         localField: 'category',
-//         //         foreignField: '_id',
-//         //         as: 'categories'
-//         //     }
-//         // }
-//     ]);
-// };
+dealSchema.statics.getDays = function () {
+    return this.aggregate([
+        { $group: { _id: '$day' } },
+        { $sort: { _id: 1 } }
+    ]);
+};
 
 function autopopulate(next) {
     this.populate('store');
