@@ -5,9 +5,13 @@ include mixins/_dealCard
 block content
     .inner
         h2= title
-        //- #{h.dump(deals)}
-        #{h.dump(deals)}
-            .stores
-                each deal in deals
-                    +dealCard(deal)
-                    //- h2= store.name
+        #{h.dump(days)}
+        ul.tags
+            each day in days
+                - let dayTitle = day._id.slice(2, day.length)
+                li.tag
+                    a.tag__link(href=`/deals/${dayTitle.toLowerCase()}`)
+                        span.tag__text= dayTitle
+        .stores
+            each deal in deals
+                +dealCard(deal)
