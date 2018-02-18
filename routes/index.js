@@ -34,6 +34,7 @@ router.get('/logout', authController.logout);
 router.get('/account', authController.isLoggedIn, userController.account);
 
 router.get('/deals', catchErrors(dealController.getAllDeals));
+router.get('/deals/:day', catchErrors(dealController.getAllDeals));
 router.get('/add-deal', 
     authController.isLoggedIn, 
     dealController.addDeal
