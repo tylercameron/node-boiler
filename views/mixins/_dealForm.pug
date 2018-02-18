@@ -17,7 +17,7 @@ mixin dealForm(deal = {}, categories = {})
         input(type="text" id="lat" name="location[coordinates][1]")
         
         label(for="day") Day of the Week
-        select(name="day")
+        select(name="day[name]")
             option(value="1-Monday" selected) Monday
             option(value="2-Tuesday") Tuesday
             option(value="3-Wednesday") Wednesday

@@ -8,10 +8,9 @@ block content
         #{h.dump(days)}
         ul.tags
             each day in days
-                - let dayTitle = day._id.slice(2, day.length)
                 li.tag
-                    a.tag__link(href=`/deals/${dayTitle.toLowerCase()}`)
-                        span.tag__text= dayTitle
+                    a.tag__link(href=`/deals/${day.daySlug}`)
+                        span.tag__text= day.name
         .stores
             each deal in deals
                 +dealCard(deal)

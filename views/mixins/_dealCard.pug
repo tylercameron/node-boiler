@@ -5,6 +5,5 @@ mixin dealCard(deal = {})
                 a(href=`/deals/${deal.slug}`) #{deal.description}
         .store__details            
             h3 $#{deal.price}
-            - let day = deal.day.slice(2, deal.day.length)
-            h4= day
+            h4= deal.day.name
             h4= deal.store.name
