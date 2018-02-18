@@ -23,11 +23,39 @@ const dealSchema = new mongoose.Schema({
         required: 'You must supply a category'
     },
     day: {
-        type: String,
-        required: 'Your deal must have a day',
-        lowercase: true,
-        trim: true
+        // type: String,
+        // required: 'Your deal must have a day',
+        // lowercase: true,
+        // trim: true,
+        // type: Object,
+        name: {
+            type: String,
+            required: 'Your deal must have a day',
+            lowercase: true,
+            trim: true,
+        },
+        order: {
+            type: Number
+        },
+        daySlug: {
+            type: String
+        }
     },
+    // location: {
+    //     type: {
+    //         type: String,
+    //         default: "Point"
+    //     },
+    //     coordinates: [
+    //         {
+    //             type: Number
+    //         }
+    //     ],
+    //     address: {
+    //         type: String,
+    //         required: "You must supply an address."
+    //     }
+    // },
     price: {
         type: Number,
         required: 'Your deal must have a price',
