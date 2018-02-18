@@ -19,7 +19,7 @@ async function makeSlug(store, description) {
 exports.getAllDeals = async (req, res) => {
     const day = req.params.day;
     const dealQuery = day || { $exists: true };
-    const dealsPromise = Deal.find({ day: dealQuery });
+    const dealsPromise = Deal.find({ 'day.daySlug': dealQuery });
     const dayPromise = Deal.getDays();
     const [ deals, days ] = await Promise.all([dealsPromise, dayPromise]);
 
@@ -72,10 +72,10 @@ exports.createDeal = async (req, res) => {
     req.body.day.order = req.body.day.name.slice(0, 1);
     req.body.day.name = req.body.day.name.slice(2, req.body.day.name.length);
  
-    // const newDeal = await (new Deal(req.body)).save();
-    res.send(req.body);
-    // req.flash('success', 'Deal Saved!');
-    // res.redirect('/deals');
+    const newDeal = await (new Deal(req.body)).save();
+    // res.send(req.body);
+    req.flash('success', 'Deal Saved!');
+    res.redirect('/deals');
 };
 
 exports.getDealsByCategory = async (req, res) => {
