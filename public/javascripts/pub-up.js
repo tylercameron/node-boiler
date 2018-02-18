@@ -6,7 +6,7 @@ import autocomplete from './modules/autocomplete';
 // import makeMap from './modules/map';
 // import ajaxHeart from './modules/heart';
 
-autocomplete( $('#address'), $('#lat'), $('#lng'), $('#store-name') );
+autocomplete($('#address'), $('#lat'), $('#lng'), $('#store-name'), $('#url'), $('#phone') );
 
 // typeAhead( $('.search') );
 
