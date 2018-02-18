@@ -35,7 +35,7 @@ const dealSchema = new mongoose.Schema({
             trim: true,
         },
         order: {
-            type: Number
+            type: String
         },
         daySlug: {
             type: String
@@ -113,7 +113,11 @@ const dealSchema = new mongoose.Schema({
 
 dealSchema.statics.getDays = function () {
     return this.aggregate([
-        { $group: { _id: '$day' } },
+        { $group: { 
+            _id: '$day.order', 
+            name: { $first: '$day.name' }, 
+            daySlug: { $first: '$day.daySlug' } 
+        } },
         { $sort: { _id: 1 } }
     ]);
 };
