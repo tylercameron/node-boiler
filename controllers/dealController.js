@@ -17,10 +17,12 @@ async function makeSlug(store, description) {
 };
 
 exports.getAllDeals = async (req, res) => {
-    const dealsPromise = Deal.find();
+    const day = req.params.day;
+    const dealQuery = day || { $exists: true };
+    const dealsPromise = Deal.find({ day: dealQuery });
     const dayPromise = Deal.getDays();
     const [ deals, days ] = await Promise.all([dealsPromise, dayPromise]);
-    // res.render(deals);
+
     res.render('deals', { title: 'Deals', deals, days });
 };
 
@@ -66,11 +68,14 @@ exports.createDeal = async (req, res) => {
     }
     const slugs = await makeSlug(req.body.name, req.body.description);
     req.body.slug = slugs;
+    req.body.day.daySlug = req.body.day.name.slice(2, req.body.day.name.length).toLowerCase();
+    req.body.day.order = req.body.day.name.slice(0, 1);
+    req.body.day.name = req.body.day.name.slice(2, req.body.day.name.length);
  
-    const newDeal = await (new Deal(req.body)).save();
-    
-    req.flash('success', 'Deal Saved!');
-    res.redirect('/deals');
+    // const newDeal = await (new Deal(req.body)).save();
+    res.send(req.body);
+    // req.flash('success', 'Deal Saved!');
+    // res.redirect('/deals');
 };
 
 exports.getDealsByCategory = async (req, res) => {
