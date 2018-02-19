@@ -26,6 +26,16 @@ exports.getAllDeals = async (req, res) => {
     res.render('deals', { title: 'Deals', deals, days });
 };
 
+exports.getDeal = async (req, res) => {
+    // TODO: see if there's a way to reduce second promise. maybe one call to get all deals on certain day then use filter method??
+    const dealSlug = req.params.deal;
+    const deal = await Deal.findOne({ slug: dealSlug });
+    const day = deal.day.name;
+    const deals = await Deal.find({ _id: { $ne: deal._id }, 'day.name': day });
+    // res.send(deals);
+    res.render('deal', { title: 'Deal', deal, deals });
+};
+
 exports.addDeal = async (req, res) => {
     const categories = await Category.find({});
     res.render('editDeal', { title: 'Add Deal', categories });
@@ -68,9 +78,9 @@ exports.createDeal = async (req, res) => {
     }
     const slugs = await makeSlug(req.body.name, req.body.description);
     req.body.slug = slugs;
-    req.body.day.daySlug = req.body.day.name.slice(2, req.body.day.name.length).toLowerCase();
     req.body.day.order = req.body.day.name.slice(0, 1);
     req.body.day.name = req.body.day.name.slice(2, req.body.day.name.length);
+    req.body.day.daySlug = req.body.day.name.toLowerCase();
  
     const newDeal = await (new Deal(req.body)).save();
     // res.send(req.body);
