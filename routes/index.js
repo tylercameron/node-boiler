@@ -35,12 +35,13 @@ router.get('/account', authController.isLoggedIn, userController.account);
 
 router.get('/deals', catchErrors(dealController.getAllDeals));
 router.get('/deals/:day', catchErrors(dealController.getAllDeals));
+router.get('/deal/:deal', dealController.getDeal);
 router.get('/add-deal', 
     authController.isLoggedIn, 
     dealController.addDeal
 );
 // router.post('/deals/add', catchErrors(dealController.createDeal));
-router.post('/add-deal', dealController.createDeal);
+router.post('/add-deal', catchErrors(dealController.createDeal));
 
 // router.get('/categories', catchErrors(categoryController.getCategories));
 router.get('/categories', catchErrors(dealController.getDealsByCategory));
