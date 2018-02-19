@@ -31,14 +31,14 @@ const dealSchema = new mongoose.Schema({
         name: {
             type: String,
             required: 'Your deal must have a day',
-            lowercase: true,
             trim: true,
         },
         order: {
             type: String
         },
         daySlug: {
-            type: String
+            type: String,
+            trim: true,
         }
     },
     // location: {
