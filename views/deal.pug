@@ -1,0 +1,22 @@
+extends layout
+
+include mixins/_dealCard
+
+block content
+    //- #{h.dump(deals)}
+    .inner
+        h5 Get it every #{deal.day.name}
+        h1 $#{deal.price}
+        h2= deal.description
+        div
+            span Available At
+            h3 #{deal.store.name}
+    .single__details.inner
+        img.single__map(src=h.staticMap(deal.store.location.coordinates))
+        p.single__location= deal.store.location.address
+            p.phone
+                a(href=`tel:${deal.store.phone}`) #{deal.store.phone}
+    .inner
+        h5 more #{deal.day.name} deals
+        each otherDeal in deals
+            +dealCard(otherDeal)
