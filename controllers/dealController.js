@@ -88,6 +88,30 @@ exports.createDeal = async (req, res) => {
     res.redirect('/deals');
 };
 
+exports.editDeal = async (req, res) => {
+    // const id = req.params.id;
+    // res.send(req.params.id);
+    const categoriesPromise = Category.find({});
+    const dealPromise = Deal.findOne({ _id: req.params.id });
+    const [categories, deal] = await Promise.all([categoriesPromise, dealPromise]);
+    // res.send(deal);
+    res.render('editDeal', { title: 'Add Deal', deal, categories });
+};
+
+exports.updateDeal = (req, res) => {
+    res.send(req.params.id);
+//     req.body.location.type = 'Point';
+//     // find and update store
+//     // redirect to store and tell them it worked
+//     const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
+//         new: true, // return new store instead of old one
+//         runValidators: true // force model to run validators
+//     }).exec();    // mongodb method
+
+//     req.flash('success', `Successfully update ${store.name}. <a href="/stores/${store.slug}">View Store</a>`);
+//     res.redirect(`/stores/${store.id}/edit`);
+};
+
 exports.getDealsByCategory = async (req, res) => {
     let category = req.params.category;
     if (category) {
