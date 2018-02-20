@@ -38,8 +38,16 @@ exports.getDeal = async (req, res) => {
 
 exports.addDeal = async (req, res) => {
     const categories = await Category.find({});
-    res.render('editDeal', { title: 'Add Deal', categories });
+    res.render('addDeal', { title: 'Add Deal', categories });
 };
+
+function confirmOwner(id, store) {
+    if (id.toString() === store.author.toString()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 exports.createDeal = async (req, res) => {
     // Save user ID
@@ -64,18 +72,14 @@ exports.createDeal = async (req, res) => {
     if (store) {
         // TODO Check to see if user has vendor status AND user ID == store.user ID
             // if yes -> set deal verified to TRUE
-            // if no -> set deal verified to FALSE, set Store vendor to FALSE
-        if (req.user.id === store.author.toString()) {
-            req.body.verified = true;
-        } else {
-            req.body.verified = false;
-        }
+            // if no -> set deal verified to FALSE
+        req.body.verified = confirmOwner(req.user.id, store);
         req.body.store = store._id;
     } else {
         // TODO: add default image for store created this way
         const newStore = await (new Store(req.body)).save();
         req.body.store = newStore._id;
-    }
+    };
     const slugs = await makeSlug(req.body.name, req.body.description);
     req.body.slug = slugs;
     req.body.day.order = req.body.day.name.slice(0, 1);
@@ -89,27 +93,37 @@ exports.createDeal = async (req, res) => {
 };
 
 exports.editDeal = async (req, res) => {
-    // const id = req.params.id;
-    // res.send(req.params.id);
     const categoriesPromise = Category.find({});
     const dealPromise = Deal.findOne({ _id: req.params.id });
     const [categories, deal] = await Promise.all([categoriesPromise, dealPromise]);
-    // res.send(deal);
-    res.render('editDeal', { title: 'Add Deal', deal, categories });
+    if (req.user._id.toString() === deal.author.toString()) {
+        res.render('editDeal', { title: 'Add Deal', deal, categories });
+    } else {
+        req.flash('error', `You must be the author of this deal to make any changes`);
+        res.redirect(`/deals`);
+    }
 };
 
-exports.updateDeal = (req, res) => {
-    res.send(req.params.id);
-//     req.body.location.type = 'Point';
-//     // find and update store
-//     // redirect to store and tell them it worked
-//     const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
-//         new: true, // return new store instead of old one
-//         runValidators: true // force model to run validators
-//     }).exec();    // mongodb method
+exports.updateDeal = async (req, res) => {
+    req.body.author = req.user._id;
+    const storePromise = Store.findOne({ _id: req.body.store });
+    const categoryPromise = Category.findOne({ 'category': req.body.category });
+    const [ store, category ] = await Promise.all([ storePromise, categoryPromise ]);
 
-//     req.flash('success', `Successfully update ${store.name}. <a href="/stores/${store.slug}">View Store</a>`);
-//     res.redirect(`/stores/${store.id}/edit`);
+    req.body.verified = confirmOwner(req.user._id, store);
+    req.body.category = category._id;
+    //TODO:: set url with category instead of description -- descriptions could be too big
+    const slugs = await makeSlug(store.name, req.body.description);
+    req.body.slug = slugs;
+    req.body.day.order = req.body.day.name.slice(0, 1);
+    req.body.day.name = req.body.day.name.slice(2, req.body.day.name.length);
+    req.body.day.daySlug = req.body.day.name.toLowerCase();
+    const deal = await Deal.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true
+    }).exec();
+    req.flash('success', `Successfully update ${store.name}. <a href="/stores/${store.slug}">View Store</a>`);
+    res.redirect(`/deals/${deal.id}/edit`);
 };
 
 exports.getDealsByCategory = async (req, res) => {
