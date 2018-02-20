@@ -1,63 +1,48 @@
 mixin dealForm(deal = {}, categories = {})
-    #{h.dump(categories)}
-    form(action=`/add-deal`, method="post")
+    #{h.dump(deal)}
+    form(action=`/add-deal/${deal.id || ''}`, method="post")
         label(for="name") Name
-        input(type="text" name="name" id="store-name" required)
+        input(type="text" name="name" id="store-name" value=(deal.store && deal.store.name) required)
         //- label(for="photo") Feature Image
         //-     input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
         //-     if store.photo
         //-         img(src=`/uploads/${store.photo}`, alt=store.name width=200)
         label(for="url") Website URL (eg. "google.com")
-        input(type="text" id="url" name="url")
+        input(type="text" id="url" name="url" value=(deal.store && deal.store.url))
         label(for="phone") Phone Number
-        input(type="text" id="phone" name="phone")
+        input(type="text" id="phone" name="phone" value=(deal.store && deal.store.phone))
         label(for="address") Address
-        input(type="text" id="address" name="location[address]" required)
-        input(type="text" id="lng" name="location[coordinates][0]")
-        input(type="text" id="lat" name="location[coordinates][1]")
-        
+        input(type="text" id="address" name="location[address]" value=(deal.store && deal.store.location.address) required)
+        input(type="text" id="lng" name="location[coordinates][0]" value=(deal.store && deal.store.location.coordinates[0]))
+        input(type="text" id="lat" name="location[coordinates][1]" value=(deal.store && deal.store.location.coordinates[1]))
+        - var days = ["1-Monday", "2-Tuesday", "3-Wednesday", "4-Thursday", "5-Friday", "6-Saturday", "7-Sunday"]
         label(for="day") Day of the Week
-        select(name="day[name]")
-            option(value="1-Monday" selected) Monday
-            option(value="2-Tuesday") Tuesday
-            option(value="3-Wednesday") Wednesday
-            option(value="4-Thursday") Thursday
-            option(value="5-Friday") Friday
-            option(value="6-Saturday") Saturday
-            option(value="7-Sunday") Sunday
+        select(name="day[name]" value=(deal.day && `${deal.day.order}-${deal.day.name}`))
+            each day in days
+                if deal.day && `${deal.day.order}-${deal.day.name}` === day
+                    option(value=day selected)= day.slice(2, day.length)
+                else 
+                    option(value=day)= day.slice(2, day.length)
         label(for="price") Price
-        input(type="number", name="price" min="0" step="0.01" placeholder="eg. 5.99")
-        //- <input type="number" value="1000" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="currency" id="c1" />
+        input(type="number", name="price" min="0" step="0.01" placeholder="eg. 5.99" value=deal.price)
         label(for="description") Deal Description
-        textarea(name="description")
+        textarea(name="description")= deal.description
         label(for="category") Deal Category
         select(name="category")
-            option(value=null selected) Select a Category
+            if !deal.category
+                option(value=null selected) Select a Category
             each category in categories
-                option(value=category.category) #{category.category}
+                if deal.category && category.category === deal.category.category
+                    option(value=category.category selected) #{category.category}
+                else 
+                    option(value=category.category) #{category.category}
         .reviewer__meta
             //- .reviewer__stars
             //-     each num in [5,4,3,2,1]
             //-         input(type="radio" required id=`star${num}` name="rating" value=num)
             //-         label(for=`star${num}`) #{num} Stars
-            input.button(type="submit" value="Submit Deal")
+        input.button(type="submit" value="Submit Deal")
 
-    //- form(action=`/add/${store._id || ''}` method="POST" class="card" enctype="multipart/form-data")
-    //-     label(for="name") Name
-    //-     input(type="text" name="name" id="name" value=store.name required)
-    //-     label(for="photo") Feature Image
-    //-         input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
-    //-         if store.photo
-    //-             img(src=`/uploads/${store.photo}`, alt=store.name width=200)
-    //-     label(for="url") Website URL (eg. "google.com")
-    //-     input(type="text" id="url" name="url" value=store.url)
-    //-     label(for="phone") Phone Number
-    //-     input(type="text" id="phone" name="phone" value=store.phone)
-    //-     label(for="address") Address
-    //-     input(type="text" id="address" name="location[address]" value=(store.location && store.location.address) required)
-    //-     input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
-    //-     input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
-    //-     input(type="submit" value="Save →" class="button")
 //- mixin storeForm(store = {})
 //-     form(action=`/add-store/${store._id || ''}` method="POST" class="card" enctype="multipart/form-data")
 //-         label(for="name") Name
