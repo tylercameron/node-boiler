@@ -1,8 +1,8 @@
 extends layout
 
-include mixins/_dealForm
+include mixins/_editDealForm
 
 block content
     .inner
         h2= title
-        +dealForm(deal, categories)
+        +editDealForm(deal, categories)
