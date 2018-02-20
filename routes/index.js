@@ -42,6 +42,12 @@ router.get('/add-deal',
 );
 // router.post('/deals/add', catchErrors(dealController.createDeal));
 router.post('/add-deal', catchErrors(dealController.createDeal));
+router.post('/add-deal/:id',
+    // storeController.upload,
+    // catchErrors(storeController.resize),
+    catchErrors(dealController.updateDeal)
+);
+router.get('/deals/:id/edit', catchErrors(dealController.editDeal));
 
 // router.get('/categories', catchErrors(categoryController.getCategories));
 router.get('/categories', catchErrors(dealController.getDealsByCategory));
