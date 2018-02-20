@@ -66,7 +66,8 @@ const dealSchema = new mongoose.Schema({
         required: 'Your deal must have text',
         trim: true
     },
-    slug: String
+    slug: String,
+    verified: Boolean
     // day of week
     // price
     // description 
