@@ -3,7 +3,8 @@ extends layout
 include mixins/_dealCard
 
 block content
-    //- #{h.dump(deals)}
+    //- #{h.dump(deal)}
+    //- #{h.dump(user)}
     .inner
         h5 Get it every #{deal.day.name}
         h1 $#{deal.price}
@@ -16,6 +17,9 @@ block content
         p.single__location= deal.store.location.address
             p.phone
                 a(href=`tel:${deal.store.phone}`) #{deal.store.phone}
+    if user && user._id.toString() === deal.author.toString()
+        .inner
+            a(href=`/deals/${deal._id}/edit`) Edit Deal
     .inner
         h5 more #{deal.day.name} deals
         each otherDeal in deals
