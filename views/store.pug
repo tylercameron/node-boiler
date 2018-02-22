@@ -4,7 +4,7 @@ include mixins/_dealForm
 include mixins/_dealCard
 
 block content
-    #{h.dump(store)}
+    //- #{h.dump(store)}
     .single
         .single__hero
             img.single__image(src=`/uploads/${store.photo || 'store.png'}`)
@@ -17,7 +17,7 @@ block content
             p.phone
                 a(href=`tel:${store.phone}`) #{store.phone}
 
-            if user
+            //- if user
                 +dealForm(store)
 
             if store.deals                
