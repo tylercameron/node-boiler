@@ -32,7 +32,8 @@ passport.use(
                     googleId: profile.id,
                     email: profile.emails[0].value,
                     name: profile.displayName,
-                    vendor: false
+                    vendor: false,
+                    userAuth: 11
                 }).save();
                 done(null, newUser);
             };
