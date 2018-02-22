@@ -46,14 +46,16 @@ exports.resize = async (req, res, next) => {
 };
 
 exports.createStore = async (req, res) => {
-    req.body.author = req.user._id;
+    if (req.user.vendor) {
+        req.body.owner = req.user._id;
+    }
     const store = await (new Store(req.body)).save();
     req.flash('success', `Successfully created ${store.name}. Care to leave a review?`);
     res.redirect(`/store/${store.slug}`);
 };
 
 const confirmOwner = (store, user) => {
-    if (!store.author.equals(user.id)) {
+    if (!store.owner || !store.owner.equals(user.id)) {
         throw Error('You must own a store in order to edit it.')
     }
 };
