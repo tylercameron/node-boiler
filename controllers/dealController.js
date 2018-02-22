@@ -42,7 +42,7 @@ exports.addDeal = async (req, res) => {
 };
 
 function confirmOwner(id, store) {
-    if (id.toString() === store.author.toString()) {
+    if (id.toString() === store.owner.toString()) {
         return true;
     } else {
         return false;
