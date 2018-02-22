@@ -41,8 +41,8 @@ exports.addDeal = async (req, res) => {
     res.render('addDeal', { title: 'Add Deal', categories });
 };
 
-function confirmOwner(id, store) {
-    if (id.toString() === store.owner.toString()) {
+function confirmOwner(user, store) {
+    if ((store.owner && user.id.toString() === store.owner.toString()) || user.userAuth > 40) {
         return true;
     } else {
         return false;
@@ -73,7 +73,7 @@ exports.createDeal = async (req, res) => {
         // TODO Check to see if user has vendor status AND user ID == store.user ID
             // if yes -> set deal verified to TRUE
             // if no -> set deal verified to FALSE
-        req.body.verified = confirmOwner(req.user.id, store);
+        req.body.verified = confirmOwner(req.user, store);
         req.body.store = store._id;
     } else {
         // TODO: add default image for store created this way
@@ -96,7 +96,7 @@ exports.editDeal = async (req, res) => {
     const categoriesPromise = Category.find({});
     const dealPromise = Deal.findOne({ _id: req.params.id });
     const [categories, deal] = await Promise.all([categoriesPromise, dealPromise]);
-    if (req.user._id.toString() === deal.author.toString()) {
+    if (req.user._id.toString() === deal.author.toString() || req.user.userAuth > 40) {
         res.render('editDeal', { title: 'Add Deal', deal, categories });
     } else {
         req.flash('error', `You must be the author of this deal to make any changes`);
@@ -105,12 +105,12 @@ exports.editDeal = async (req, res) => {
 };
 
 exports.updateDeal = async (req, res) => {
-    req.body.author = req.user._id;
+    // req.body.author = req.user._id;
     const storePromise = Store.findOne({ _id: req.body.store });
     const categoryPromise = Category.findOne({ 'category': req.body.category });
     const [ store, category ] = await Promise.all([ storePromise, categoryPromise ]);
 
-    req.body.verified = confirmOwner(req.user._id, store);
+    req.body.verified = confirmOwner(req.user, store);
     req.body.category = category._id;
     //TODO:: set url with category instead of description -- descriptions could be too big
     const slugs = await makeSlug(store.name, req.body.description);
