@@ -24,7 +24,8 @@ const userSchema = new Schema({
         required: 'Please supply a name',
         trim: true
     },
-    vendor: Boolean
+    vendor: Boolean,
+    userAuth: Number
 });
 
 userSchema.virtual('gravatar').get(function () {
@@ -35,3 +36,5 @@ userSchema.virtual('gravatar').get(function () {
 // userSchema.plugin(mongodbErrorHandler);
 
 module.exports = mongoose.model('User', userSchema);
+
+// USER AUTH FIELD ::::     11 = Subscriber, 21 = Registered User, 31 = Vendor User, 41 = Admin
