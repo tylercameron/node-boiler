@@ -2,20 +2,6 @@ mixin editDealForm(deal = {}, categories = {})
     #{h.dump(deal)}
     form(action=`/add-deal/${deal.id || ''}`, method="post")
         input(type="text" name="store" id="edit--store" value=(deal.store._id))
-        //- label(for="name") Name
-        //- input(type="text" name="name" id="store-name" value=(deal.store && deal.store.name) required)
-        //- label(for="photo") Feature Image
-        //-     input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
-        //-     if store.photo
-        //-         img(src=`/uploads/${store.photo}`, alt=store.name width=200)
-        //- label(for="url") Website URL (eg. "google.com")
-        //- input(type="text" id="url" name="url" value=(deal.store && deal.store.url))
-        //- label(for="phone") Phone Number
-        //- input(type="text" id="phone" name="phone" value=(deal.store && deal.store.phone))
-        //- label(for="address") Address
-        //- input(type="text" id="address" name="location[address]" value=(deal.store && deal.store.location.address) required)
-        //- input(type="text" id="lng" name="location[coordinates][0]" value=(deal.store && deal.store.location.coordinates[0]))
-        //- input(type="text" id="lat" name="location[coordinates][1]" value=(deal.store && deal.store.location.coordinates[1]))
         - var days = ["1-Monday", "2-Tuesday", "3-Wednesday", "4-Thursday", "5-Friday", "6-Saturday", "7-Sunday"]
         label(for="day") Day of the Week
         select(name="day[name]")
@@ -37,33 +23,4 @@ mixin editDealForm(deal = {}, categories = {})
                     option(value=category.category selected) #{category.category}
                 else 
                     option(value=category.category) #{category.category}
-        .reviewer__meta
-            //- .reviewer__stars
-            //-     each num in [5,4,3,2,1]
-            //-         input(type="radio" required id=`star${num}` name="rating" value=num)
-            //-         label(for=`star${num}`) #{num} Stars
         input.button(type="submit" value="Submit Deal")
-
-//- mixin storeForm(store = {})
-//-     form(action=`/add-store/${store._id || ''}` method="POST" class="card" enctype="multipart/form-data")
-//-         label(for="name") Name
-//-         input(type="text" name="name" id="store-name" value=store.name required)
-//-         label(for="photo") Feature Image
-//-             input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
-//-             if store.photo
-//-                 img(src=`/uploads/${store.photo}`, alt=store.name width=200)
-//-         label(for="url") Website URL (eg. "google.com")
-//-         input(type="text" id="url" name="url" value=store.url)
-//-         label(for="phone") Phone Number
-//-         input(type="text" id="phone" name="phone" value=store.phone)
-//-         label(for="address") Address
-//-         input(type="text" id="address" name="location[address]" value=(store.location && store.location.address) required)
-//-         input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]))
-//-         input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]))
-//-         input(type="submit" value="Save →" class="button")
-//-         //- - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Vegatarian', 'Licensed']
-//-         //- ul.tags
-//-         //-     each choice in choices
-//-         //-         .tag.tag__choice
-//-         //-             input(type="checkbox" id=choice value=choice name="tags")
-//-         //-             label(for=choice) #{choice}
