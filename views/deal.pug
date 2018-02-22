@@ -17,7 +17,7 @@ block content
         p.single__location= deal.store.location.address
             p.phone
                 a(href=`tel:${deal.store.phone}`) #{deal.store.phone}
-    if user && user._id.toString() === deal.author.toString()
+    if (user && user._id.toString() === deal.author.toString()) || (user && user.userAuth > 40)
         .inner
             a(href=`/deals/${deal._id}/edit`) Edit Deal
     .inner
