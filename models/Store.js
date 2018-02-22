@@ -9,11 +9,6 @@ const storeSchema = new mongoose.Schema({
         required: "Please enter a store name!"
     },
     slug: String,
-    // description: {
-    //     type: String,
-    //     trim: true
-    // },
-    // tags: [String],
     created: {
         type: Date,
         default: Date.now
@@ -40,10 +35,9 @@ const storeSchema = new mongoose.Schema({
         trim: true
     },
     phone: String,
-    author: {
+    owner: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: 'You must supply an author.'
+        ref: 'User'
     }
 // }, {
 //     //below is necessary because when adding object through virtuals it will not appear in teh JSON unless explicitely called. eg calling 'store' will not show reviews data, but calling 'store.reviews' will. adding this fixes this
