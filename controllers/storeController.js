@@ -55,7 +55,7 @@ exports.createStore = async (req, res) => {
 };
 
 const confirmOwner = (store, user) => {
-    if (!store.owner || !store.owner.equals(user.id)) {
+    if ((!store.owner || !store.owner.equals(user.id)) && user.userAuth < 41) {
         throw Error('You must own a store in order to edit it.')
     }
 };
