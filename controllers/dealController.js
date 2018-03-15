@@ -17,13 +17,15 @@ async function makeSlug(store, description) {
 };
 
 exports.getAllDeals = async (req, res) => {
-    const day = req.params.day;
-    const dealQuery = day || { $exists: true };
+    const weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const today = new Date().getDay();
+    const weekday = req.params.day || weekdays[today];
+    const dealQuery = weekday || { $exists: true };
     const dealsPromise = Deal.find({ 'day.daySlug': dealQuery });
     const dayPromise = Deal.getDays();
     const [ deals, days ] = await Promise.all([dealsPromise, dayPromise]);
 
-    res.render('deals', { title: 'Deals', deals, days });
+    res.render('deals', { title: 'Deals', deals, days, weekday });
 };
 
 exports.getDeal = async (req, res) => {

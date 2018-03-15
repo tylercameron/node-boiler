@@ -5,11 +5,11 @@ include mixins/_dealCard
 block content
     .inner
         h2= title
-        //- #{h.dump(deals)}
+        //- #{h.dump(weekday)}
         ul.tags
             each day in days
                 li.tag
-                    a.tag__link(href=`/deals/${day.daySlug}`)
+                    a.tag__link(href=`/deals/${day.daySlug}` class=(day.daySlug === weekday ? 'tag__link--active' : '')) 
                         span.tag__text= day.name
         .stores
             each deal in deals
