@@ -20,18 +20,31 @@ exports.stripe = (req, res) => {
 };
 
 exports.payment = async (req, res) => {
-    const amount = 500;
-
     const customer = await stripe.customers.create({
         email: req.body.stripeEmail,
         source: req.body.stripeToken
     });
-    req.user.stripeID = customer.id;
-    req.user.stripeEmail = customer.email;
-    const user = await req.user.save();
+
     const subscription = await stripe.subscriptions.create({
         customer: customer.id,
-        items: [{ plan: 'plan_CU8CiwI7NurUjs' }],
+        items: [{ plan: 'test-vendor-pr' }],
     });
+
+    req.user.vendor = true;
+    req.user.stripeID = customer.id;
+    req.user.stripeEmail = customer.email;
+    req.user.stripeSubscripID = subscription.id;
+    const user = await req.user.save();
+
     res.render('charge');
+};
+
+exports.cancelSubscription = async (req, res) => {
+    if (req.user && req.user.stripeSubscripID) {
+        await stripe.subscriptions.del(req.user.stripeSubscripID, { at_period_end: true });
+        req.user.vendor = false;
+        req.user.stripeSubscripID = null;
+        const user = await req.user.save();
+        res.render('account');
+    }
 };
