@@ -27,11 +27,27 @@ exports.payment = async (req, res) => {
         source: req.body.stripeToken
     });
     console.log(customer);
-    const charge = await stripe.charges.create({
-        amount,
-        description: "Sample Charge",
-        currency: "usd",
-        customer: customer.id
+    console.log('user', req.user);
+    req.user.stripeID = customer.id;
+    req.user.stripeEmail = customer.email;
+    const user = await req.user.save();
+    console.log('user2', req.user);
+    // const charge = await stripe.charges.create({
+    //     amount,
+    //     description: "Sample Charge",
+    //     currency: "usd",
+    //     customer: customer.id
+    // });
+    // const plan = stripe.plans.create({
+    //     product: { name: "Basic Product" },
+    //     currency: 'usd',
+    //     interval: 'month',
+    //     nickname: 'Basic Monthly',
+    //     amount: 0,
+    // });
+    const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{ plan: 'plan_CU8CiwI7NurUjs' }],
     });
     res.render('charge');
 };
