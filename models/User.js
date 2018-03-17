@@ -27,6 +27,7 @@ const userSchema = new Schema({
     vendor: Boolean,
     stripeID: String,
     stripeEmail: String,
+    stripeSubscripID: String,
     userAuth: Number
 });
 
