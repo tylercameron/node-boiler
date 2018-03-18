@@ -1,32 +1,14 @@
 extends layout
 
 block content
-    #{h.dump(user)}
-    //- .inner
-    //-     h2= title
-    //-         .stores
-    //-             each store in stores
-    //-                 +storeCard(store)
-
+    //- #{h.dump(user)}
     form(action="/api/stripe", method="post")
         article
-            label Amount: $5.00
+            label Amount: $20.00
         script(
             src="//checkout.stripe.com/v2/checkout.js",
             class="stripe-button",
             data-key=keyPublishable,
             data-locale="auto",
-            data-description="Sample Charge",
-            data-amount="500")
-    //- <form action="your-server-side-code" method="POST">
-    //-     <script
-    //-         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    //-         data-key="pk_test_69dppvmzkfOqu9KcJAtZDZ9a"
-    //-         data-amount="999"
-    //-         data-name="Demo Site"
-    //-         data-description="Example charge"
-    //-         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    //-         data-locale="auto"
-    //-         data-currency="aud">
-    //-     </script>
-    //- </form>
+            data-description="Test Vendor Signup",
+            data-amount="2000")
