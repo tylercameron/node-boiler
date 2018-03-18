@@ -40,11 +40,15 @@ exports.payment = async (req, res) => {
 };
 
 exports.cancelSubscription = async (req, res) => {
-    if (req.user && req.user.stripeSubscripID) {
+    if (req.user && req.user.vendor && req.user.stripeSubscripID) {
         await stripe.subscriptions.del(req.user.stripeSubscripID, { at_period_end: true });
         req.user.vendor = false;
         req.user.stripeSubscripID = null;
         const user = await req.user.save();
-        res.render('account');
+        req.flash('success', 'You have successfully cancelled your subscription.');
+        res.redirect('/account');
+    } else {
+        req.flash('error', 'You must be a vendor to cancel subscription!');
+        res.redirect('/account');
     }
 };
