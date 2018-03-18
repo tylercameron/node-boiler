@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    //- #{h.dump(user)}
     .inner
         h2 Your Account
         dl
@@ -8,3 +9,10 @@ block content
             dd #{user.name}
             dt Email
             dd= user.email
+        if user.vendor && user.stripeSubscripID
+            form(action="/api/stripe/cancel", method="post")
+                article
+                    label Cancel Subscription
+                button(type="submit") Cancel
+        else
+            a(href="/vendor-signup") Become a Vendor

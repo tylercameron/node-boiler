@@ -41,6 +41,7 @@ router.get('/logout', authController.logout);
 router.get('/account', authController.isLoggedIn, userController.account);
 router.get('/vendor-signup', authController.isLoggedIn, userController.stripe);
 router.post('/api/stripe', userController.payment);
+router.post('/api/stripe/cancel', userController.cancelSubscription);
 
 // =======   DEALS   ======= //
 router.get('/deals', catchErrors(dealController.getAllDeals));
