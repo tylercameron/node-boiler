@@ -21,10 +21,18 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 exports.siteName = `Pub Up!`;
 
 exports.menu = [
-  { slug: '/stores', title: 'Stores', icon: 'store', },
-  // { slug: '/tags', title: 'Tags', icon: 'tag', },
-  { slug: '/deals', title: 'Deals', icon: 'top', },
-  { slug: '/add-store', title: 'Add Store', icon: 'add', },
-  { slug: '/add-deal', title: 'Add Deal', icon: 'add', },
-  { slug: '/categories', title: 'Categories', icon: 'tag', }
+  // { slug: '/stores', title: 'Stores', icon: 'store', },
+  // // { slug: '/tags', title: 'Tags', icon: 'tag', },
+  // { slug: '/deals', title: 'Deals', icon: 'top', },
+  // { slug: '/add-store', title: 'Add Store', icon: 'add', },
+  // { slug: '/add-deal', title: 'Add Deal', icon: 'add', },
+  // { slug: '/categories', title: 'Categories', icon: 'tag', },
+
+  { slug: 'monday', title: 'Monday' },
+  { slug: 'tuesday', title: 'Tuesday' },
+  { slug: 'wednesday', title: 'Wednesday' },
+  { slug: 'thursday', title: 'Thursday' },
+  { slug: 'friday', title: 'Friday' },
+  { slug: 'saturday', title: 'Saturday' },
+  { slug: 'sunday', title: 'Sunday' }
 ];
