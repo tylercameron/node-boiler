@@ -24,6 +24,7 @@ const userSchema = new Schema({
         required: 'Please supply a name',
         trim: true
     },
+    subscriber: Boolean,
     vendor: Boolean,
     stripeID: String,
     stripeEmail: String,
