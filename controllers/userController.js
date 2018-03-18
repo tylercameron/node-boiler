@@ -34,6 +34,7 @@ exports.payment = async (req, res) => {
     req.user.stripeID = customer.id;
     req.user.stripeEmail = customer.email;
     req.user.stripeSubscripID = subscription.id;
+    // req.user.userAuth = 31;
     const user = await req.user.save();
 
     res.render('charge');
