@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const dealController = require('../controllers/dealController');
 const categoryController = require('../controllers/categoryController');
+const pagesController = require('../controllers/pagesController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 const { userIsVendor } = require('../handlers/userVerification');
@@ -78,4 +79,7 @@ router.post('/categories/add',
     catchErrors(categoryController.createCategories)
 );
 
+
+// =======   PAGES   ======= //
+router.get('/about', pagesController.about);
 module.exports = router;
